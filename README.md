@@ -23,6 +23,9 @@ To reduce the dataset, we will:
 1. Focus on (a region of?) chromosome 21 or some other chromosome with meaningful structural variants.
 2. Downsample that region to a still usable coverage (~30X?).
 
+The high-confidence consensus structural variant call set from the above paper is in its supplementary table S4:
+https://static-content.springer.com/esm/art%3A10.1186%2Fs13059-022-02816-6/MediaObjects/13059_2022_2816_MOESM4_ESM.xlsx
+
 
 ## Usage
 
