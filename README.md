@@ -6,6 +6,23 @@
 
 A Snakemake workflow for creating a structural variant testing dataset that is both small enough to run in standard continuous integration testing environments, and large enough to produce meaningful results.
 
+This workflow is based on the data presented and analyzed here:
+
+Talsania, K., Shen, Tw., Chen, X. *et al.* Structural variant analysis of a cancer reference cell line sample using multiple sequencing technologies. *Genome Biol* **23**, 255 (2022). https://doi.org/10.1186/s13059-022-02816-6
+
+The full data can be found here:
+
+https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA489865&o=acc_s%3Aa
+
+We use Illumina data from the breast cancer cell line (`HCC1395`) and the corresponding normal (B lymphoblast) cell line (`HCC1395BL`), to generate reduced and downsampled testing samples:
+
+1. A regular normal sample.
+2. A mixture of the cancer and normal cell lines at known fraction(s), to be able test for the resulting expected purity.
+
+To reduce the dataset, we will:
+1. Focus on (a region of?) chromosome 21 or some other chromosome with meaningful structural variants.
+2. Downsample that region to a still usable coverage (~30X?).
+
 
 ## Usage
 
