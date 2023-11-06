@@ -1,0 +1,43 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+
+description: snakemake workflow configuration file
+
+type: object
+
+properties:
+  pure_tumor_sample:
+    type: object
+    properties:
+      sra_accession:
+        type: string
+      sample_name:
+        type: string
+  required:
+    - sra_accession
+    - sample_name  pure_normal_sample:
+    type: object
+    properties:
+      sra_accession:
+        type: string
+      sample_name:
+        type: string
+  required:
+    - sra_accession
+    - sample_name
+  capture_bed:
+    type: string
+  cutadapt:
+    type: object
+    properties:
+      adapters:
+        type: string
+      extra:
+        type: string
+    required:
+      - adapters
+      - extra
+required:
+  - cutadapt
+  - pure_tumor_sample
+  - pure_normal_sample
+  - capture_bed

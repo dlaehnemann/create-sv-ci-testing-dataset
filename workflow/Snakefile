@@ -2,3 +2,11 @@
 # Please follow the best practices: 
 # https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
 # in particular regarding the standardized folder structure mentioned there. 
+
+configfile: "config/config.yaml"
+
+include: "rules/common.smk"
+include: "rules/ref.smk"
+include: "rules/download.smk"
+include: "rules/trim.smk"
+include: "rules/mapping.smk"
