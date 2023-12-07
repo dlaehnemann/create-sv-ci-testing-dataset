@@ -27,5 +27,7 @@ rule bwa_mem2_index:
         ),
     log:
         "logs/bwa-mem2_index/{genome}.log",
+    resources:
+        mem_mb=lambda wc, input: 25 * input.size_mb,
     wrapper:
         "v2.9.1/bio/bwa-mem2/index"
