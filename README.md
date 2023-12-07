@@ -19,8 +19,8 @@ We use Illumina data from the breast cancer cell line (`HCC1395`) and the corres
 1. A regular normal sample.
 2. A mixture of the cancer and normal cell lines at known fraction(s), to be able test for the resulting expected purity.
 
-To reduce the dataset, we will:
-1. Focus on (a region of?) chromosome 21 or some other chromosome with meaningful structural variants.
+To reduce the dataset, we:
+1. Focus on chromosome 22 or some other chromosome with meaningful structural variants.
 2. Downsample that region to a still usable coverage (~30X?).
 
 The high-confidence consensus structural variant call set from the above paper is in its supplementary table S4:
