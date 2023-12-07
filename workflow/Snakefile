@@ -14,3 +14,26 @@ include: "rules/trim.smk"
 include: "rules/mapping.smk"
 include: "rules/downsampling.smk"
 include: "rules/contaminate.smk"
+
+
+rule all:
+    input:
+        expand(
+            "results/contaminated/{tumor_sample}.{chr}.{total_depth}x.{contamination}_percent_{normal_sample}_contamination.bam",
+            tumor_sample=config["pure_tumor_sample"]["sample_name"],
+            chr=config["chromosome_to_extract"],
+            total_depth=config["target_coverages"],
+            contamination=config["target_normal_contaminations_percent"],
+            normal_sample=config["pure_normal_sample"]["sample_name"],
+        ),
+        expand(
+            "results/downsampled/{normal_sample}.{chr}.{depth}x.bam",
+            normal_sample=config["pure_normal_sample"]["sample_name"],
+            chr=config["chromosome_to_extract"],
+            depth=config["target_coverages"],
+        ),
+
+
+wildcard_constraints:
+    sample=f"{config['pure_tumor_sample']['sample_name']}|{config['pure_normal_sample']['sample_name']}",
+    chr=f"{config['chromosome_to_extract']}",

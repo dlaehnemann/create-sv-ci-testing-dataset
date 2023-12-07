@@ -10,6 +10,22 @@ pure_normal_sample:
 # log in and search for download at: https://earray.chem.agilent.com/suredesign
 capture_bed: "resources/S07604624_Covered.bed"
 
+# specify a chromosome in Ensembl notation (without any `chr` prefix)
+chromosome_to_extract: "22"
+
+target_coverages:
+  - 10
+  - 20
+  - 30
+  - 40
+
+target_normal_contaminations_percent:
+  - 10
+  - 30
+  - 50
+  - 70
+  - 90
+
 cutadapt:
   adapters: "-a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
   extra: ""
