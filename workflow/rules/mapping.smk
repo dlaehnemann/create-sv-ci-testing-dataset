@@ -1,8 +1,12 @@
-def get_reads_for_mapping(wildcards):
+def get_sample_type(wildcards):
     if config["pure_tumor_sample"]["sample_name"] == wildcards.sample:
-        accession = config["pure_tumor_sample"].get("sra_accession")
+        return "pure_tumor_sample"
     elif config["pure_normal_sample"]["sample_name"] == wildcards.sample:
-        accession = config["pure_normal_sample"].get("sra_accession")
+        return "pure_normal_sample"
+
+
+def get_reads_for_mapping(wildcards):
+    accession = config[get_sample_type(wildcards)].get("sra_accession")
     return [
         f"results/trimmed/{accession}.1.fastq.gz",
         f"results/trimmed/{accession}.2.fastq.gz",
@@ -27,7 +31,7 @@ rule bwa_mem2_map_raw_trimmed:
     log:
         "logs/bwa_mem2/{sample}.log",
     params:
-        extra=r"-R '@RG\tID:{sample}\tSM:{sample}'",
+        extra=lambda wc: f"-R '@RG\tID:{wc.sample}\tSM:{wc.sample}\tPL:{config[get_sample_type(wc)]['platform']}'",
         sort="none",  # Can be 'none', 'samtools', or 'picard'.
         sort_order="coordinate",  # Can be 'coordinate' (default) or 'queryname'.
         sort_extra="",  # Extra args for samtools/picard sorts.

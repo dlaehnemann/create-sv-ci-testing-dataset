@@ -1,10 +1,12 @@
 pure_tumor_sample:
   sra_accession: "SRR7890879"
   sample_name: "HCC1395"
+  platform: "ILLUMINA"
 
 pure_normal_sample:
   sra_accession: "SRR7890880"
   sample_name: "HCC1395BL"
+  platform: "ILLUMINA"
 
 # this needs to be obtained from the provider of the capture kit, in this case,
 # log in and search for download at: https://earray.chem.agilent.com/suredesign

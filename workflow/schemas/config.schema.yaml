@@ -12,9 +12,12 @@ properties:
         type: string
       sample_name:
         type: string
+      platform:
+        type: string
   required:
     - sra_accession
     - sample_name
+    - platform
   pure_normal_sample:
     type: object
     properties:
@@ -22,9 +25,12 @@ properties:
         type: string
       sample_name:
         type: string
+      platform:
+        type: string
   required:
     - sra_accession
     - sample_name
+    - platform
   capture_bed:
     type: string
   chromosome_to_extract:
