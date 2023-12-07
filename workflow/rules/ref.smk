@@ -5,7 +5,7 @@ rule get_genome:
         species="homo_sapiens",
         datatype="dna",
         build="GRCh38",
-        release="111",
+        release="110",
     log:
         "logs/get_genome.log",
     cache: "omit-software"  # save space and time with between workflow caching (see docs)
