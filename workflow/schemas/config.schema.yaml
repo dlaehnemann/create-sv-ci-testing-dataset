@@ -14,7 +14,8 @@ properties:
         type: string
   required:
     - sra_accession
-    - sample_name  pure_normal_sample:
+    - sample_name
+  pure_normal_sample:
     type: object
     properties:
       sra_accession:
@@ -26,6 +27,16 @@ properties:
     - sample_name
   capture_bed:
     type: string
+  chromosome_to_extract:
+    type: string
+  target_coverages:
+    type: array
+    items:
+      type: number
+  target_normal_contaminations_percent:
+    type: array
+    items:
+      type: number
   cutadapt:
     type: object
     properties:
@@ -41,3 +52,6 @@ required:
   - pure_tumor_sample
   - pure_normal_sample
   - capture_bed
+  - chromosome_to_extract
+  - target_coverages
+  - target_normal_contaminations_percent
