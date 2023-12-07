@@ -31,3 +31,17 @@ rule bwa_mem2_index:
         mem_mb=lambda wc, input: 25 * input.size_mb,
     wrapper:
         "v2.9.1/bio/bwa-mem2/index"
+
+
+rule fix_target_bed:
+    input:
+        bed=config["capture_bed"],
+    output:
+        bed="resources/capture_regions.bed",
+    log:
+        "logs/capture_regions.bed",
+    localrule: True
+    conda:
+        "../envs/sed.yaml"
+    shell:
+        "sed -e '1,2 d' -e 's/^chr//' {input.bed} > {output.bed} 2>{log}"
