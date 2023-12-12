@@ -1,7 +1,7 @@
 rule mosdepth_bed:
     input:
-        bam="results/mapped/{sample}.sorted.bam",
-        bai="results/mapped/{sample}.sorted.bam.bai",
+        bam="results/mapped/{sample}.full_genome.sorted.bam",
+        bai="results/mapped/{sample}.full_genome.sorted.bam.bai",
         bed="resources/capture_regions.bed",
     output:
         "results/mosdepth/{sample}.{chr}.mosdepth.global.dist.txt",
@@ -11,7 +11,7 @@ rule mosdepth_bed:
     log:
         "logs/mosdepth/{sample}.{chr}.log",
     params:
-        extra="--no-per-base --chrom {chr}",  # optional
+        extra="--no-per-base --chrom {chr}" if config.get("chromosome_to_extract") else "--no-per-base",  # optional
     # additional decompression threads through `--threads`
     threads: 4  # This value - 1 will be sent to `--threads`
     wrapper:
@@ -20,11 +20,11 @@ rule mosdepth_bed:
 
 rule samtools_view_extract_chr:
     input:
-        bam="results/mapped/{sample}.sorted.bam",
-        bai="results/mapped/{sample}.sorted.bam.bai",
+        bam="results/mapped/{sample}.full_genome.sorted.bam",
+        bai="results/mapped/{sample}.full_genome.sorted.bam.bai",
     output:
-        bam="results/extract_chr/{sample}.{chr}.bam",
-        idx="results/extract_chr/{sample}.{chr}.bam.bai",
+        bam="results/extract_chr/{sample}.{chr}.sorted.bam",
+        idx="results/extract_chr/{sample}.{chr}.sorted.bam.bai",
     log:
         "logs/extract_chr/{sample}.{chr}.log",
     params:
@@ -47,8 +47,8 @@ def get_subsampling_ratio(wc, input):
 
 rule samtools_view_downsample:
     input:
-        bam="results/extract_chr/{sample}.{chr}.bam",
-        idx="results/extract_chr/{sample}.{chr}.bam.bai",
+        bam="results/extract_chr/{sample}.{chr}.sorted.bam",
+        idx="results/extract_chr/{sample}.{chr}.sorted.bam.bai",
         summary="results/mosdepth/{sample}.{chr}.mosdepth.summary.txt",
     output:
         bam="results/downsampled/{sample}.{chr}.{depth}x.bam",

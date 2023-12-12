@@ -12,7 +12,8 @@ pure_normal_sample:
 # log in and search for download at: https://earray.chem.agilent.com/suredesign
 capture_bed: "resources/S07604624_Covered.bed"
 
-# specify a chromosome in Ensembl notation (without any `chr` prefix)
+# Optional entry to extract a single chromosome, please specify the chromosome
+# in Ensembl notation (without any `chr` prefix).
 chromosome_to_extract: "22"
 
 target_coverages:

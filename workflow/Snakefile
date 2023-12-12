@@ -21,7 +21,7 @@ rule all:
         expand(
             "results/contaminated/{tumor_sample}.{chr}.{total_depth}x.{contamination}_percent_{normal_sample}_contamination.bam",
             tumor_sample=config["pure_tumor_sample"]["sample_name"],
-            chr=config["chromosome_to_extract"],
+            chr=config.get("chromosome_to_extract", "full_genome"),
             total_depth=config["target_coverages"],
             contamination=config["target_normal_contaminations_percent"],
             normal_sample=config["pure_normal_sample"]["sample_name"],
@@ -29,7 +29,7 @@ rule all:
         expand(
             "results/downsampled/{normal_sample}.{chr}.{depth}x.bam",
             normal_sample=config["pure_normal_sample"]["sample_name"],
-            chr=config["chromosome_to_extract"],
+            chr=config.get("chromosome_to_extract", "full_genome"),
             depth=config["target_coverages"],
         ),
 

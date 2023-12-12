@@ -58,6 +58,5 @@ required:
   - pure_tumor_sample
   - pure_normal_sample
   - capture_bed
-  - chromosome_to_extract
   - target_coverages
   - target_normal_contaminations_percent

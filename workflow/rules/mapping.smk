@@ -46,9 +46,9 @@ rule samtools_sort_mapped:
     input:
         "results/mapped/{sample}.bam",
     output:
-        "results/mapped/{sample}.sorted.bam",
+        "results/mapped/{sample}.full_genome.sorted.bam",
     log:
-        "logs/samtools_sort/{sample}.sorted.log",
+        "logs/samtools_sort/{sample}.full_genome.sorted.log",
     params:
         extra="-m 4G",
     resources:
@@ -60,11 +60,11 @@ rule samtools_sort_mapped:
 
 rule samtools_index_mapped:
     input:
-        "results/mapped/{sample}.sorted.bam",
+        "results/mapped/{sample}.full_genome.sorted.bam",
     output:
-        "results/mapped/{sample}.sorted.bam.bai",
+        "results/mapped/{sample}.full_genome.sorted.bam.bai",
     log:
-        "logs/samtools_index_mapped/{sample}.log",
+        "logs/samtools_index_mapped/{sample}.full_genome.log",
     params:
         extra="",  # optional params string
     threads: 4  # This value - 1 will be sent to -@
