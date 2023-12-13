@@ -18,8 +18,7 @@ rule bwa_mem2_map_raw_trimmed:
         reads=get_reads_for_mapping,
         # Index can be a list of (all) files created by bwa, or one of them
         idx=multiext(
-            "resources/genome",
-            ".fasta",
+            genome,
             ".0123",
             ".amb",
             ".ann",
@@ -27,7 +26,7 @@ rule bwa_mem2_map_raw_trimmed:
             ".pac",
         ),
     output:
-        temp("results/mapped/{sample}.bam"),
+        temp("results/mapped/{sample}.full_genome.bam"),
     log:
         "logs/bwa_mem2/{sample}.log",
     params:
@@ -44,7 +43,7 @@ rule bwa_mem2_map_raw_trimmed:
 
 rule samtools_sort_mapped:
     input:
-        "results/mapped/{sample}.bam",
+        "results/mapped/{sample}.full_genome.bam",
     output:
         "results/mapped/{sample}.full_genome.sorted.bam",
     log:

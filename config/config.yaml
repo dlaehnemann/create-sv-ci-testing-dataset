@@ -12,9 +12,17 @@ pure_normal_sample:
 # log in and search for download at: https://earray.chem.agilent.com/suredesign
 capture_bed: "resources/S07604624_Covered.bed"
 
-# Optional entry to extract a single chromosome, please specify the chromosome
-# in Ensembl notation (without any `chr` prefix).
-chromosome_to_extract: "22"
+ref:
+  # Ensembl species name
+  species: homo_sapiens
+  # Ensembl release
+  release: 110
+  # Genome build
+  build: GRCh38
+  # Optionally, you can extract only the reads that map to a single chromosome,
+  # please specify the chromosome in Ensembl notation (without any `chr` prefix).
+  # This is usually only relevant for testing.
+  # chromosome: 22
 
 target_coverages:
   - 10

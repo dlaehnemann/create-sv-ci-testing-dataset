@@ -7,6 +7,13 @@ import pandas as pd
 
 configfile: "config/config.yaml"
 
+# construct genome name
+datatype = "dna"
+species = config["ref"]["species"]
+build = config["ref"]["build"]
+release = config["ref"]["release"]
+genome_name = f"genome.{datatype}.{species}.{build}.{release}"
+genome = f"resources/{genome_name}.fasta"
 
 include: "rules/ref.smk"
 include: "rules/download.smk"
@@ -36,4 +43,4 @@ rule all:
 
 wildcard_constraints:
     sample=f"{config['pure_tumor_sample']['sample_name']}|{config['pure_normal_sample']['sample_name']}",
-    chr=f"{config['chromosome_to_extract']}",
+    chr="|".join(["full_genome", config["ref"].get("chromosome", "")]),

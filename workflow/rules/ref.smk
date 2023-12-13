@@ -1,13 +1,14 @@
 rule get_genome:
     output:
-        "resources/genome.fasta",
+        genome,
     params:
-        species="homo_sapiens",
+        species=config["ref"]["species"],
         datatype="dna",
-        build="GRCh38",
-        release="110",
+        build=config["ref"]["build"],
+        release=config["ref"]["release"],
+        chromosome=config["ref"].get("chromosome"),
     log:
-        "logs/get_genome.log",
+        f"logs/get_{genome_name}.log",
     cache: "omit-software"  # save space and time with between workflow caching (see docs)
     wrapper:
         "v2.9.1/bio/reference/ensembl-sequence"
@@ -15,10 +16,10 @@ rule get_genome:
 
 rule bwa_mem2_index:
     input:
-        "resources/{genome}.fasta",
+        genome,
     output:
         multiext(
-            "resources/{genome}",
+            genome,
             ".0123",
             ".amb",
             ".ann",
@@ -26,7 +27,7 @@ rule bwa_mem2_index:
             ".pac",
         ),
     log:
-        "logs/bwa-mem2_index/{genome}.log",
+        f"logs/bwa-mem2_index/{genome_name}.log",
     resources:
         mem_mb=lambda wc, input: 25 * input.size_mb,
     wrapper:
