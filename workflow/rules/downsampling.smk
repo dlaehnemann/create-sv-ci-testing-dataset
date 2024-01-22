@@ -29,7 +29,7 @@ rule samtools_view_extract_chr:
         "logs/extract_chr/{sample}.{chr}.log",
     params:
         extra="",  # optional params string
-        region="{chr}",  # optional region string
+        region=lambda wc: "" if wc.chr == "full_genome" else "{chr}",  # optional additional parameters as string
     threads: 2
     wrapper:
         "v2.9.1/bio/samtools/view"
@@ -37,7 +37,8 @@ rule samtools_view_extract_chr:
 
 def get_subsampling_ratio(wc, input):
     coverage_results = pd.read_csv(input.summary, delimiter="\t")
-    region = f"{wc.chr}_region"
+    chr = "total" if wc.chr == "full_genome" else wc.chr
+    region = f"{chr}_region"
     region_coverage = float(
         coverage_results.loc[coverage_results["chrom"] == region, "mean"].squeeze()
     )

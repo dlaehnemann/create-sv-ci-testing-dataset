@@ -14,7 +14,7 @@ rule create_contaminated_tumor_sample:
     log:
         "logs/contaminated/{tumor_sample}.{chr}.{total_depth}x.{contamination}_percent_{normal_sample}_contamination.log",
     params:
-        extra="-R {chr}",  # optional additional parameters as string
+        extra=lambda wc: "" if wc.chr == "full_genome" else "-R {chr}",  # optional additional parameters as string
     threads: 4
     wrapper:
         "v3.0.4/bio/samtools/merge"
