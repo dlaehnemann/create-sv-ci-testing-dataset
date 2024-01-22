@@ -3,8 +3,6 @@
 # https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
 # in particular regarding the standardized folder structure mentioned there.
 import pandas as pd
-from os import path
-
 
 configfile: "config/config.yaml"
 
@@ -30,6 +28,7 @@ rule all:
         "results/units.tsv",
 
 rule create_sample_sheet:
+    localrule: True
     input:
         tumor_samples=expand(
             "results/contaminated/{tumor_sample}.{chr}.{total_depth}x.{contamination}_percent_{normal_sample}_contamination.bam",
@@ -50,60 +49,8 @@ rule create_sample_sheet:
         units="results/units.tsv",
     log:
         "logs/samples.tsv.log",
-    run:
-        with open(output.samples) as s_out, open(output.units) as u_out:
-            s_out.write(
-                "\t".join([
-                    "sample_name",
-                    "group",
-                    "alias",
-                    "expected_contamination",
-                    "depth",
-                ])
-            )
-            u_out.write(
-                "\t".join([
-                    "sample_name",
-                    "unit_name",
-                ])
-            )
-            for t in input.tumor_samples:
-                sample_name = path.splitext(path.basename(t))[0]
-                [tumor_sample, chrom, depth_string, contam_string] = path.basename(t).split(".")
-                depth = depth_string.rstrip("x")
-                [ contamination, _, normal_sample, _ ] = contam_string.split("_")
-                normal_name = ".".join([normal_sample, chrom, depth_string])
-                s_out.write(
-                    "\t".join([
-                        sample_name,
-                        sample_name,
-                        "tumor",
-                        contamination,
-                        depth,
-                    ])
-                )
-                u_out.write(
-                    "\t".join([
-                        sample_name,
-                        "u1",
-                    ])
-                )
-                s_out.write(
-                    "\t".join([
-                        normal_name,
-                        sample_name,
-                        "normal",
-                        "",
-                        depth,
-                    ])
-                )
-                u_out.write(
-                    "\t".join(
-                        normal_name,
-                        "u1",
-                    )
-
-                )
+    script:
+        "scripts/create_sample_sheet.py"
 
 
 wildcard_constraints:
